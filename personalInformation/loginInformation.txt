@@ -1,0 +1,6 @@
+1{
+	name:kemal,
+	surname:bayram,
+	birthday:11.11.1997
+},
+2{...}...
