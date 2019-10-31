@@ -10,7 +10,7 @@ class HomeScreen:
     def createHomeScreen(self):     
         root = Tk('Main')      
         root.title("Captcha With Stegonography")
-        img=PhotoImage(file="images/shoes.jpg")
+        img=PhotoImage(file=r"C:\\indir12.png")
         lblIm=Label(root,image=img)
         lblIm.image=img
         lblIm.pack()
