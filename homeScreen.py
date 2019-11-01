@@ -1,7 +1,5 @@
 from tkinter import * 
-import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog
+from PIL import ImageTk,Image
 
 class HomeScreen:
     def __init__(self):
@@ -10,7 +8,8 @@ class HomeScreen:
     def createHomeScreen(self):     
         root = Tk('Main')      
         root.title("Captcha With Stegonography")
-        img=PhotoImage(file="images/shoes.jpg")
+        #img=PhotoImage(file=r'images/shoes.jpg')
+        img=ImageTk.PhotoImage(Image.open("images/shoes.jpg"))
         lblIm=Label(root,image=img)
         lblIm.image=img
         lblIm.pack()
