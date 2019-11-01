@@ -32,6 +32,7 @@ class ParseProcess:
 
             counterY=counterY+frameSizeY
             counterX=0
+            
 
         return frames
 
