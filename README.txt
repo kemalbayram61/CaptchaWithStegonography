@@ -14,13 +14,10 @@ Proje Yapımcıları:
 		govent@hotmail.com
 
 Projeye Dair Veri Araştırmacıları:
-	1) Arif Batmaz
-		arifbatmaz23@hotmail.com
-
-	2) Burhan Göksel
+	1) Burhan Göksel
 		brhngksel@gmail.com
 
-	3) Ozan Mervan Çelik
+	2) Ozan Mervan Çelik
 		ozanmervancelik@gmail.com
 
 Proje Yöneticileri:
