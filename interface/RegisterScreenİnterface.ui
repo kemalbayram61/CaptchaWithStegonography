@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>txtRegisterScreen</class>
+ <widget class="QDialog" name="txtRegisterScreen">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="sizeIncrement">
+   <size>
+    <width>400</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>400</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Times New Roman</family>
+   </font>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Kayıt Ekranı</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>133</x>
+     <y>9</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtTcNumber_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>9</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>T.C. KİMLİK NO</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lnPasswordNumber">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>240</y>
+     <width>201</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTipDuration">
+    <number>1</number>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+   </property>
+   <property name="maxLength">
+    <number>16</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lnTcNumber">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>60</y>
+     <width>201</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhDialableCharactersOnly</set>
+   </property>
+   <property name="maxLength">
+    <number>11</number>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>true</bool>
+   </property>
+   <property name="numberOnly" stdset="0">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lnName">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>120</y>
+     <width>201</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maxLength">
+    <number>20</number>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lnNameP">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>180</y>
+     <width>201</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="maxLength">
+    <number>20</number>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtName">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>ADI</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtNameP">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>SOYADI</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtPasswordNumber">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>240</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>ŞİFRE</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtDateTime">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>DOĞUM TARİHİ</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="txtAddress">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>360</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1000</width>
+     <height>1000</height>
+    </size>
+   </property>
+   <property name="sizeIncrement">
+    <size>
+     <width>1000</width>
+     <height>1000</height>
+    </size>
+   </property>
+   <property name="baseSize">
+    <size>
+     <width>1000</width>
+     <height>1000</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>ADRES</string>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="lnDateTime">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>290</y>
+     <width>201</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="showGroupSeparator" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="maximumDateTime">
+    <datetime>
+     <hour>17</hour>
+     <minute>59</minute>
+     <second>59</second>
+     <year>2050</year>
+     <month>12</month>
+     <day>31</day>
+    </datetime>
+   </property>
+   <property name="minimumDateTime">
+    <datetime>
+     <hour>21</hour>
+     <minute>0</minute>
+     <second>0</second>
+     <year>1910</year>
+     <month>9</month>
+     <day>12</day>
+    </datetime>
+   </property>
+   <property name="maximumTime">
+    <time>
+     <hour>17</hour>
+     <minute>59</minute>
+     <second>59</second>
+    </time>
+   </property>
+   <property name="minimumTime">
+    <time>
+     <hour>21</hour>
+     <minute>0</minute>
+     <second>0</second>
+    </time>
+   </property>
+   <property name="currentSection">
+    <enum>QDateTimeEdit::DaySection</enum>
+   </property>
+   <property name="calendarPopup">
+    <bool>true</bool>
+   </property>
+   <property name="currentSectionIndex">
+    <number>0</number>
+   </property>
+   <property name="timeSpec">
+    <enum>Qt::UTC</enum>
+   </property>
+   <property name="date">
+    <date>
+     <year>2019</year>
+     <month>12</month>
+     <day>3</day>
+    </date>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lnAddress">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>360</y>
+     <width>201</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <stylestrategy>NoAntialias</stylestrategy>
+    </font>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="toolTipDuration">
+    <number>0</number>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhNone</set>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>100</number>
+   </property>
+   <property name="cursorPosition">
+    <number>0</number>
+   </property>
+   <property name="cursorMoveStyle">
+    <enum>Qt::VisualMoveStyle</enum>
+   </property>
+   <property name="clearButtonEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnRegisterButton">
+   <property name="geometry">
+    <rect>
+     <x>164</x>
+     <y>460</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Kayıt</string>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>lnTcNumber</tabstop>
+  <tabstop>lnName</tabstop>
+  <tabstop>lnDateTime</tabstop>
+  <tabstop>lnPasswordNumber</tabstop>
+  <tabstop>lnAddress</tabstop>
+  <tabstop>lnNameP</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
