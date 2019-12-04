@@ -1,0 +1,1 @@
+interface dosyalarýnýn pytqt ile oluþturulmuþ arayüz dosyalarýnýn bulunduðu klasördür.
