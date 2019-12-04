@@ -8,9 +8,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import databaseOperation
 
 class Ui_txtRegisterScreen(object):
+    tcNumber=''
+    firstName=''
+    lastName=''
+    password=''
+    birthday=''
+    address=''
+
     def setupUi(self, txtRegisterScreen):
         txtRegisterScreen.setObjectName("txtRegisterScreen")
         txtRegisterScreen.setWindowModality(QtCore.Qt.WindowModal)
@@ -150,8 +157,10 @@ class Ui_txtRegisterScreen(object):
         self.btnSearch = QtWidgets.QPushButton(txtRegisterScreen)
         self.btnSearch.setGeometry(QtCore.QRect(150, 50, 180, 30))
         self.btnSearch.setObjectName("btnSearch")
+        self.btnSearch.clicked.connect(self.getUser) #arama komutu
         self.btnUpdate = QtWidgets.QPushButton(txtRegisterScreen)
         self.btnUpdate.setGeometry(QtCore.QRect(10, 460, 180, 30))
+        self.btnUpdate.clicked.connect(self.updateUser) #güncelleme komutu
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -160,6 +169,7 @@ class Ui_txtRegisterScreen(object):
         self.btnUpdate.setObjectName("btnUpdate")
         self.btnClear = QtWidgets.QPushButton(txtRegisterScreen)
         self.btnClear.setGeometry(QtCore.QRect(210, 460, 180, 30))
+        self.btnClear.clicked.connect(self.deleteUser) #silme komutu
         font = QtGui.QFont()
         font.setPointSize(10)
         self.btnClear.setFont(font)
@@ -182,6 +192,60 @@ class Ui_txtRegisterScreen(object):
         self.btnUpdate.setText(_translate("txtRegisterScreen", "Güncelle"))
         self.btnClear.setText(_translate("txtRegisterScreen", "Sil"))
 
+    def clearForm(self):
+        self.lnName.setText('')
+        self.lnNameP.setText('')
+        self.lnPasswordNumber.setText('')
+        self.lineEdit.setText('')
+        self.lnAddress.setText('')
+
+    def controlUser(self):
+
+        for element in self.tcNumber:
+            if(element not in ['1','2','3','4','5','6','7','8','9','0']):
+                return False
+        if(self.firstName=='' or self.lastName=='' or self.address=='' or self.birthday=='' or self.password==''):
+            return False
+        if(len(self.tcNumber)!=11):
+            return False
+        return True
+
+    def getUser(self):
+        self.clearForm()
+        userOperation=databaseOperation.UserOperations('database.db')
+        self.tcNumber=self.lnTcNumber.text()
+        user=userOperation.getUser(self.tcNumber)
+
+        if(len(user)!=0):
+            self.lnTcNumber.setText(user[0][0])
+            self.lnName.setText(user[0][1])
+            self.lnNameP.setText(user[0][2])
+            self.lnPasswordNumber.setText(user[0][3])
+            self.lineEdit.setText(user[0][4])
+            self.lnAddress.setText(user[0][5])
+
+    def updateUser(self):
+        self.clearForm()
+        userOperation=databaseOperation.UserOperations('database.db')
+        self.firstName=self.lnName.text()
+        self.lastName=self.lnNameP.text()
+        self.tcNumber=self.lnTcNumber.text()
+        self.birthday=self.lineEdit.text()
+        self.password=self.lnPasswordNumber.text()
+        self.address=self.lnAddress.text()
+        if(self.controlUser() and userOperation.updateUser(self.tcNumber,self.firstName,self.lastName,self.birthday,self.password,self.address)):
+            print("Kullanıcı Güncellendi...")
+        else:
+            print("Hata Oluştu...!")
+
+    def deleteUser(self):
+        self.clearForm()
+        userOperation=databaseOperation.UserOperations('database.db')
+        self.tcNumber=self.lnTcNumber.text()
+        if(userOperation.dropUser(self.tcNumber)):
+            print("Kullanıcı Silindi...")
+        else:
+            print("Hata Oluştu...")
 
 if __name__ == "__main__":
     import sys

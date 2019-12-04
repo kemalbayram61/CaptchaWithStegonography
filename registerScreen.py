@@ -147,7 +147,7 @@ class Ui_txtRegisterScreen(object):
         self.lnAddress.setObjectName("lnAddress")
         self.btnRegisterButton = QtWidgets.QPushButton(txtRegisterScreen)
         self.btnRegisterButton.setGeometry(QtCore.QRect(164, 460, 101, 31))
-        self.btnRegisterButton.clicked.connect(self.registerUser)
+        self.btnRegisterButton.clicked.connect(self.registerUser) #kayıt komutu
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -180,8 +180,15 @@ class Ui_txtRegisterScreen(object):
         self.txtAddress.setText(_translate("txtRegisterScreen", "ADRES"))
         self.btnRegisterButton.setText(_translate("txtRegisterScreen", "Kayıt"))
 
-    def controlUser(self):
+    def clearForm(self):
+        self.lnName.setText('')
+        self.lnNameP.setText('')
+        self.lnPasswordNumber.setText('')
+        self.birthday.setText('')
+        self.lnAddress.setText('')
 
+
+    def controlUser(self):
         for element in self.tcNumber:
             if(element not in ['1','2','3','4','5','6','7','8','9','0']):
                 return False
@@ -192,6 +199,7 @@ class Ui_txtRegisterScreen(object):
         return True
         
     def registerUser(self):
+        self.clearForm()
         userOperations=databaseOperation.UserOperations('database.db')
         self.firstName=self.lnName.text()
         self.lastName=self.lnNameP.text()
