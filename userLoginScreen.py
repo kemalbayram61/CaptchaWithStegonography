@@ -1,145 +1,90 @@
-#database bağlantılı olan kod
-import tkinter as tk
-from tkinter import messagebox
-from tkinter import ttk
+# -*- coding: utf-8 -*-
 
-import databaseOperation as db
-
-class loginForm(ttk.Frame):
-    def __init__(self,parent,*arags,**kwargs):
-        tk.Frame.__init__(self,parent)
-        self.parent = parent
-
-        self.parent.protocol("WM_DELETE_WINDOW",self.closing_window)
-
-        window_width = 350
-        window_height = 100
-        screen_width = self.parent.winfo_screenwidth()
-        screen_height = self.parent.winfo_screenheight()
-
-        x_position = int((screen_width/2) - (window_width/2))
-        y_position = int((screen_height/2) - (window_height/2))
-
-        self.parent.geometry("{}x{}+{}+{}".format(window_width,window_height,x_position,y_position))
-
-        self.widgeter()
-
-    def widgeter(self):
-        self.ent_username = ttk.Entry(self.parent)
-        self.ent_username.insert(0,"username")
-        self.ent_username.bind("<FocusIn>",self.foc_in_username)
-        self.ent_username.bind("<FocusOut>",self.foc_out_username)
+# Form implementation generated from reading ui file 'EnterScreenModule.ui'
+#
+# Created by: PyQt5 UI code generator 5.12.3
+#
+# WARNING! All changes made in this file will be lost!
 
 
-        self.ent_password = ttk.Entry(self.parent)
-        self.ent_password.insert(0,"password")
-        self.ent_password.bind("<FocusIn>",self.foc_in_password)
-        self.ent_password.bind("<FocusOut>",self.foc_out_password)
-
-        btn_login = ttk.Button(self.parent,text="Login",command=self.submit)
-        btn_exit = ttk.Button(self.parent,text="Exit",command=self.closing_window)
-
-        self.ent_username.grid(row=0,column=0,columnspan=3,sticky="nsew")
-        self.ent_password.grid(row=1,column=0,columnspan=3,sticky="nsew")
-
-        btn_login.grid(row=2,column=0,sticky="nsw")
-        btn_exit.grid(row=2,column=1,sticky="nse")
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-    def foc_in_username(self, *args):
-        if self.ent_username.get() == "username":
-            self.ent_username.delete(0, tk.END)
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(400, 500)
+        Dialog.setMinimumSize(QtCore.QSize(400, 500))
+        Dialog.setMaximumSize(QtCore.QSize(400, 500))
+        Dialog.setSizeIncrement(QtCore.QSize(400, 500))
+        Dialog.setBaseSize(QtCore.QSize(400, 500))
+        self.txtTcNumber = QtWidgets.QLineEdit(Dialog)
+        self.txtTcNumber.setGeometry(QtCore.QRect(170, 120, 200, 20))
+        self.txtTcNumber.setMaxLength(11)
+        self.txtTcNumber.setClearButtonEnabled(True)
+        self.txtTcNumber.setObjectName("txtTcNumber")
+        self.txtPassword = QtWidgets.QLineEdit(Dialog)
+        self.txtPassword.setGeometry(QtCore.QRect(170, 180, 200, 20))
+        self.txtPassword.setText("")
+        self.txtPassword.setMaxLength(20)
+        self.txtPassword.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.txtPassword.setClearButtonEnabled(True)
+        self.txtPassword.setObjectName("txtPassword")
+        self.lnTcNumber = QtWidgets.QLabel(Dialog)
+        self.lnTcNumber.setGeometry(QtCore.QRect(20, 120, 111, 16))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.lnTcNumber.setFont(font)
+        self.lnTcNumber.setObjectName("lnTcNumber")
+        self.lnPassword = QtWidgets.QLabel(Dialog)
+        self.lnPassword.setGeometry(QtCore.QRect(40, 180, 61, 20))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.lnPassword.setFont(font)
+        self.lnPassword.setObjectName("lnPassword")
+        self.btnEnter = QtWidgets.QPushButton(Dialog)
+        self.btnEnter.setGeometry(QtCore.QRect(90, 240, 180, 30))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnEnter.setFont(font)
+        self.btnEnter.setObjectName("btnEnter")
+        self.btnRegister = QtWidgets.QPushButton(Dialog)
+        self.btnRegister.setGeometry(QtCore.QRect(90, 290, 180, 30))
+        self.btnRegister.setMinimumSize(QtCore.QSize(180, 0))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btnRegister.setFont(font)
+        self.btnRegister.setObjectName("btnRegister")
 
-    def foc_out_username(self,*args):
-        if not self.ent_username.get():
-            self.ent_username.insert(0,"username")
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def foc_in_password(self,*args):
-        if self.ent_password.get() == "password":
-            self.ent_password.delete(0,tk.END)
-            self.ent_password.configure(show="*")
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "EnterLoginModule"))
+        self.lnTcNumber.setText(_translate("Dialog", "T.C. Kimlik No"))
+        self.lnPassword.setText(_translate("Dialog", "Şifre"))
+        self.btnEnter.setText(_translate("Dialog", "Tamam"))
+        self.btnRegister.setText(_translate("Dialog", "Kayıt ol"))
 
-    def foc_out_password(self,*args):
-        if not self.ent_password.get():
-            self.ent_password.insert(0,"password")
-            self.ent_password.configure(show="")
-
-    def closing_window(self):
-        answer = messagebox.askyesno("Exit","You want to exit the program?")
-        if answer == True:
-            self.parent.destroy()
-
-    def submit(self):
-        __verify = db.DatabaseManip(self.ent_username.get(),self.ent_password.get())
-        __str_verify = str(__verify)
-        if __str_verify == "correct":
-            self.initialize_mainApplication()
-        elif __str_verify is "incorrect":
-            messagebox.showerror("Incorrect Password","You have entered incorrect password")
-            # add deleter
-        elif __str_verify == "notexist":
-            messagebox.showerror("Username does not exist","The username you entered does not exist")
-
-
-    def initialize_mainApplication(self):
-        self.parent.destroy()
-        self.parent = tk.Tk()
-        self.mainApp = mainApplicaiton(self.parent)
-        self.parent.mainloop()
-
-class mainApplicaiton(tk.Frame):
-    def __init__(self,parent):
-        self.parent = parent
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    loginForm(root)
-    root.mainloop()
-
-
-
-#Güncel çalışan kod 
-####################################################################################
-from tkinter import *
-import tkinter.messagebox as tm
-
-
-class LoginFrame(Frame):
-    def __init__(self, master):
-        super().__init__(master)
-
-        self.label_username = Label(self, text="Username")
-        self.label_password = Label(self, text="Password")
-
-        self.entry_username = Entry(self)
-        self.entry_password = Entry(self, show="*")
-
-        self.label_username.grid(row=0, sticky=E)
-        self.label_password.grid(row=1, sticky=E)
-        self.entry_username.grid(row=0, column=1)
-        self.entry_password.grid(row=1, column=1)
-
-        self.checkbox = Checkbutton(self, text="Keep me logged in")
-        self.checkbox.grid(columnspan=2)
-
-        self.logbtn = Button(self, text="Login", command=self._login_btn_clicked)
-        self.logbtn.grid(columnspan=2)
-
-        self.pack()
-
-    def _login_btn_clicked(self):
-        # print("Clicked")
-        username = self.entry_username.get()
-        password = self.entry_password.get()
-
-        # print(username, password)
-
-        if username == "john" and password == "password":
-            tm.showinfo("Login info", "Welcome John")
-        else:
-            tm.showerror("Login error", "Incorrect username")
-
-
-root = Tk()
-lf = LoginFrame(root)
-root.mainloop()
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
