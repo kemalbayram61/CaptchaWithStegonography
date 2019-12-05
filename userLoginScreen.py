@@ -10,13 +10,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import databaseOperation
 import homeScreen
+import registerScreen
+import userUpdate
 
 class Ui_Dialog(object):
     tcNumber=''
     password=''
 
-    def __init__(self,parent=None):
-        object.__init__(self)
+    def __init__(self,HomeScreen,RegisterScreen,UserUpdate):
+        self.home=HomeScreen
+        self.register=RegisterScreen
+        self.uupdate=UserUpdate
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -78,6 +82,7 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         self.btnEnter.clicked.connect(self.userLogin) #silme komutu
+        self.btnRegister.clicked.connect(self.userRegister) #kayıt komutu
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -98,16 +103,30 @@ class Ui_Dialog(object):
                 print("Hatalı Şifre!!!")
             else:
                 print("Giriş Başarılı...")
+                uiHome=homeScreen.Ui_Form(self.uupdate,self.tcNumber)
+                uiHome.setupUi(self.home)
+                self.home.show()
                 
-
         else:
             print("Kullanıcı Kayıtlı Değil...")
+
+    def userRegister(self):
+        uiRegister=registerScreen.Ui_txtRegisterScreen()
+        uiRegister.setupUi(self.register)
+        self.register.show()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+
+    DialogHome=QtWidgets.QDialog()
+
+    DialogRegister=QtWidgets.QDialog()
+
+    DialogUserUpdate=QtWidgets.QDialog()
+    
+    ui = Ui_Dialog(DialogHome,DialogRegister,DialogUserUpdate)
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())

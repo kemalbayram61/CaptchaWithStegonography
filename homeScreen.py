@@ -8,11 +8,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import databaseOperation
+import userUpdate
 
 class Ui_Form(object):
-    def __init__(self,parent=None):
-        object.__init__(self)
+    tcNumber=''
+    user=''
+
+    def __init__(self,UserUpdate,tcNumber):
+        self.tcNumber=tcNumber
+        self.uupdate=UserUpdate
         
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -50,11 +55,21 @@ class Ui_Form(object):
         self.btnProfileSetting = QtWidgets.QPushButton(self.Profil)
         self.btnProfileSetting.setGeometry(QtCore.QRect(110, 230, 180, 30))
         self.btnProfileSetting.setObjectName("btnProfileSetting")
+
+        self.btnProfileSetting.clicked.connect(self.userUpdateScreen)
         self.tabWidget.addTab(self.Profil, "")
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        self.user=self.getUser()
+        userName=''
+        if(len(self.user)!=0):
+            userName=self.user[0][1]+' '+self.user[0][2]
+
+        self.lbNameView.setText(userName)
+        self.lbNameView_2.setText(userName)
+
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -68,15 +83,10 @@ class Ui_Form(object):
         self.btnProfileSetting.setText(_translate("Form", "Profili Düzenle"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Profil), _translate("Form", "Profil İşlemleri"))
 
-
-def main():
-    import sys
-    appHome = QtWidgets.QApplication(sys.argv)
-    FormHome = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(FormHome)
-    FormHome.show()
-    sys.exit(appHome.exec_())
-
-if __name__ == "__main__":
-    main()
+    def getUser(self):
+        userOperation=databaseOperation.UserOperations('database.db')
+        return userOperation.getUser(self.tcNumber)
+    def userUpdateScreen(self):
+        uiUpdate=userUpdate.UI_UserUpdate(self.tcNumber)
+        uiUpdate.setupUi(self.uupdate)
+        self.uupdate.show()
