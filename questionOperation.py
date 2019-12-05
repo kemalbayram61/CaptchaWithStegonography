@@ -8,9 +8,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import databaseOperation
 
 class Ui_AddDeleteQuestion(object):
+    id=''
+    question=''
+
     def setupUi(self, AddDeleteQuestion):
         AddDeleteQuestion.setObjectName("AddDeleteQuestion")
         AddDeleteQuestion.resize(400, 500)
@@ -127,6 +130,9 @@ class Ui_AddDeleteQuestion(object):
 
         self.retranslateUi(AddDeleteQuestion)
         QtCore.QMetaObject.connectSlotsByName(AddDeleteQuestion)
+        self.btnAdd.clicked.connect(self.addQuestion)
+        self.btnSearch.clicked.connect(self.getQuestion)
+        self.btnDelete.clicked.connect(self.deletQuestion)
 
     def retranslateUi(self, AddDeleteQuestion):
         _translate = QtCore.QCoreApplication.translate
@@ -141,6 +147,30 @@ class Ui_AddDeleteQuestion(object):
         self.lbDeleteNoFunction.setText(_translate("AddDeleteQuestion", "Silme"))
         self.btnSearch.setText(_translate("AddDeleteQuestion", "Ara"))
         self.lbQuestionDeleteView.setText(_translate("AddDeleteQuestion", "Soru"))
+
+    def addQuestion(self):
+        questionOpr=databaseOperation.QuestionOperations('database.db')
+        self.id=self.txtAddID.text()
+        self.question=self.txtAddQuestion.toPlainText()
+        if(questionOpr.addQuestion(self.id,self.question)):
+            print("Soru Eklendi...")
+
+    def getQuestion(self):
+        questionOpr=databaseOperation.QuestionOperations('database.db')
+        self.id=(int)(self.txtSearchID.text())
+        question=questionOpr.getQuestion(self.id)
+        if(len(question)!=0):
+            self.lbQuestionView.setText((str)(question[0][1]))
+            self.lbIDView.setText((str)(question[0][0]))
+        else:
+            self.lbQuestionView.setText('')
+            self.lbIDView.setText('')
+
+    def deletQuestion(self):
+        questionOpr=databaseOperation.QuestionOperations('database.db')
+        self.id=(int)(self.txtSearchID.text())
+        if(questionOpr.dropQuestion(self.id)):
+            print("Başarıyla silindi...")
 
 
 if __name__ == "__main__":
