@@ -11,6 +11,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
+    def __init__(self,parent=None):
+        object.__init__(self)
+        
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(400, 500)
@@ -66,11 +69,14 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Profil), _translate("Form", "Profil İşlemleri"))
 
 
-if __name__ == "__main__":
+def main():
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
+    appHome = QtWidgets.QApplication(sys.argv)
+    FormHome = QtWidgets.QWidget()
     ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
+    ui.setupUi(FormHome)
+    FormHome.show()
+    sys.exit(appHome.exec_())
+
+if __name__ == "__main__":
+    main()

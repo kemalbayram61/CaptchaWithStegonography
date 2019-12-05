@@ -8,9 +8,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import databaseOperation
+import homeScreen
 
 class Ui_Dialog(object):
+    tcNumber=''
+    password=''
+
+    def __init__(self,parent=None):
+        object.__init__(self)
+
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 500)
@@ -70,6 +77,7 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.btnEnter.clicked.connect(self.userLogin) #silme komutu
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -79,6 +87,21 @@ class Ui_Dialog(object):
         self.btnEnter.setText(_translate("Dialog", "Tamam"))
         self.btnRegister.setText(_translate("Dialog", "Kayıt ol"))
 
+
+    def userLogin(self):
+        userOperations=databaseOperation.UserOperations('database.db')
+        self.tcNumber=self.txtTcNumber.text()
+        user=userOperations.getUser(self.tcNumber)
+        if(len(user)!=0):
+            self.password=user[0][3]
+            if(self.txtPassword.text()!=self.password):
+                print("Hatalı Şifre!!!")
+            else:
+                print("Giriş Başarılı...")
+                
+
+        else:
+            print("Kullanıcı Kayıtlı Değil...")
 
 if __name__ == "__main__":
     import sys
