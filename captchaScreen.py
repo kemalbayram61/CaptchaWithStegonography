@@ -8,9 +8,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from questionAnswerScreen import UI_QA
 
 class Ui_CaptchaSelectionScreenModule(object):
+    dialog=''
+    tcNumber=''
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
+
     def setupUi(self, CaptchaSelectionScreenModule):
         CaptchaSelectionScreenModule.setObjectName("CaptchaSelectionScreenModule")
         CaptchaSelectionScreenModule.setEnabled(True)
@@ -81,18 +86,17 @@ class Ui_CaptchaSelectionScreenModule(object):
 
         self.retranslateUi(CaptchaSelectionScreenModule)
         QtCore.QMetaObject.connectSlotsByName(CaptchaSelectionScreenModule)
+        self.dialog=CaptchaSelectionScreenModule
+        self.btnDone.clicked.connect(self.questionScreen)
 
     def retranslateUi(self, CaptchaSelectionScreenModule):
         _translate = QtCore.QCoreApplication.translate
         CaptchaSelectionScreenModule.setWindowTitle(_translate("CaptchaSelectionScreenModule", "CaptchaSelectionScreenModule"))
         self.btnDone.setText(_translate("CaptchaSelectionScreenModule", "Onayla"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    CaptchaSelectionScreenModule = QtWidgets.QWidget()
-    ui = Ui_CaptchaSelectionScreenModule()
-    ui.setupUi(CaptchaSelectionScreenModule)
-    CaptchaSelectionScreenModule.show()
-    sys.exit(app.exec_())
+    def questionScreen(self):
+        self.questionWindow=QtWidgets.QWidget()
+        self.uiquestion=UI_QA(self.tcNumber)
+        self.uiquestion.setupUi(self.questionWindow)
+        self.questionWindow.show()
+        self.dialog.close()

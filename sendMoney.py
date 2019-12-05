@@ -2,15 +2,20 @@
 
 # Form implementation generated from reading ui file 'SendMoneyModule.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.3
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from captchaScreen import Ui_CaptchaSelectionScreenModule
 
+class UI_SendMoney(object):
+    tcNumber=''
+    dialog=''
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
 
-class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 500)
@@ -55,13 +60,14 @@ class Ui_Dialog(object):
         self.btnSendMoney.setObjectName("btnSendMoney")
         self.txtDestinationTcNumber = QtWidgets.QLineEdit(Dialog)
         self.txtDestinationTcNumber.setGeometry(QtCore.QRect(160, 120, 200, 20))
+        self.txtDestinationTcNumber.setMaxLength(11)
+        self.txtDestinationTcNumber.setClearButtonEnabled(True)
         self.txtDestinationTcNumber.setObjectName("txtDestinationTcNumber")
         self.txtDestinationTcNumber_2 = QtWidgets.QLineEdit(Dialog)
         self.txtDestinationTcNumber_2.setGeometry(QtCore.QRect(160, 160, 200, 20))
+        self.txtDestinationTcNumber_2.setMaxLength(11)
+        self.txtDestinationTcNumber_2.setClearButtonEnabled(True)
         self.txtDestinationTcNumber_2.setObjectName("txtDestinationTcNumber_2")
-        self.txtBalance = QtWidgets.QLineEdit(Dialog)
-        self.txtBalance.setGeometry(QtCore.QRect(160, 210, 200, 20))
-        self.txtBalance.setObjectName("txtBalance")
         self.lbBalance = QtWidgets.QLabel(Dialog)
         self.lbBalance.setGeometry(QtCore.QRect(10, 210, 111, 21))
         font = QtGui.QFont()
@@ -73,10 +79,19 @@ class Ui_Dialog(object):
         self.lbBalance.setObjectName("lbBalance")
         self.txtSendAmount = QtWidgets.QLineEdit(Dialog)
         self.txtSendAmount.setGeometry(QtCore.QRect(160, 260, 200, 20))
+        self.txtSendAmount.setMaxLength(500000)
+        self.txtSendAmount.setClearButtonEnabled(True)
         self.txtSendAmount.setObjectName("txtSendAmount")
+        self.label = QtWidgets.QLabel(Dialog)
+        self.label.setGeometry(QtCore.QRect(160, 210, 201, 21))
+        self.label.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.label.setText("")
+        self.label.setObjectName("label")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.btnSendMoney.clicked.connect(self.captchaScreen)
+        self.dialog=Dialog
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -87,12 +102,9 @@ class Ui_Dialog(object):
         self.btnSendMoney.setText(_translate("Dialog", "Gönder"))
         self.lbBalance.setText(_translate("Dialog", "Mevcut Bakiye"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())
+    def captchaScreen(self):
+        self.captchaWindow=QtWidgets.QWidget()
+        self.uiCaptcha=Ui_CaptchaSelectionScreenModule(self.tcNumber)
+        self.uiCaptcha.setupUi(self.captchaWindow)
+        self.captchaWindow.show()
+        self.dialog.close()

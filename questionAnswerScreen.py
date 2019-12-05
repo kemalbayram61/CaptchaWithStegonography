@@ -10,7 +10,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
+class UI_QA(object):
+    dialog=''
+    tcNumber=''
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(400, 500)
@@ -32,18 +37,13 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        self.dialog=Form
+        self.btnDone.clicked.connect(self.complate)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "QuestionAuthenticationScreenModule"))
         self.btnDone.setText(_translate("Form", "Onayla"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
+    def complate(self):
+        self.dialog.close()

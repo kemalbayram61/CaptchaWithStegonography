@@ -10,6 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from userUpdate import UI_UserUpdate
 from profileInformation import UI_ProfileInformation
+from sendMoney import UI_SendMoney
 
 class Ui_Form(object):
     tcNumber=''
@@ -55,6 +56,7 @@ class Ui_Form(object):
         self.btnSendMoney.setObjectName("btnSendMoney")
         self.btnProfileView = QtWidgets.QPushButton(Form)
         self.btnProfileView.setGeometry(QtCore.QRect(100, 300, 180, 30))
+        self.btnSendMoney.clicked.connect(self.sendMoneyScreen)
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -105,3 +107,9 @@ class Ui_Form(object):
         self.uiOverviewScreen=UI_ProfileInformation(self.tcNumber)
         self.uiOverviewScreen.setupUi(self.uoverviewWindow)
         self.uoverviewWindow.show()
+
+    def sendMoneyScreen(self):
+        self.sendMoneyWindow=QtWidgets.QWidget()
+        self.uiSendMoney=UI_SendMoney(self.tcNumber)
+        self.uiSendMoney.setupUi(self.sendMoneyWindow)
+        self.sendMoneyWindow.show()
