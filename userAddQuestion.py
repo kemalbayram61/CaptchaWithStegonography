@@ -11,6 +11,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
+    tcNumber=''
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setWindowModality(QtCore.Qt.WindowModal)
@@ -117,12 +121,3 @@ class Ui_Form(object):
         self.lbAnswer3.setText(_translate("Form", "3.Cevap"))
         self.btnDone.setText(_translate("Form", "Tamam"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())

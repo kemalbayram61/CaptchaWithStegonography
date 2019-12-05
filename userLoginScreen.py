@@ -9,39 +9,37 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import databaseOperation
-import homeScreen
-import registerScreen
-import userUpdate
+from homeScreen import Ui_Form
+from registerScreen import Ui_txtRegisterScreen
+from userUpdate import UI_UserUpdate
+import sys
 
 class Ui_Dialog(object):
     tcNumber=''
     password=''
-
-    def __init__(self,HomeScreen,RegisterScreen,UserUpdate):
-        self.home=HomeScreen
-        self.register=RegisterScreen
-        self.uupdate=UserUpdate
+    Dialog=''
 
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(400, 500)
-        Dialog.setMinimumSize(QtCore.QSize(400, 500))
-        Dialog.setMaximumSize(QtCore.QSize(400, 500))
-        Dialog.setSizeIncrement(QtCore.QSize(400, 500))
-        Dialog.setBaseSize(QtCore.QSize(400, 500))
-        self.txtTcNumber = QtWidgets.QLineEdit(Dialog)
+        self.Dialog=Dialog
+        self.Dialog.setObjectName("Dialog")
+        self.Dialog.resize(400, 500)
+        self.Dialog.setMinimumSize(QtCore.QSize(400, 500))
+        self.Dialog.setMaximumSize(QtCore.QSize(400, 500))
+        self.Dialog.setSizeIncrement(QtCore.QSize(400, 500))
+        self.Dialog.setBaseSize(QtCore.QSize(400, 500))
+        self.txtTcNumber = QtWidgets.QLineEdit(self.Dialog)
         self.txtTcNumber.setGeometry(QtCore.QRect(170, 120, 200, 20))
         self.txtTcNumber.setMaxLength(11)
         self.txtTcNumber.setClearButtonEnabled(True)
         self.txtTcNumber.setObjectName("txtTcNumber")
-        self.txtPassword = QtWidgets.QLineEdit(Dialog)
+        self.txtPassword = QtWidgets.QLineEdit(self.Dialog)
         self.txtPassword.setGeometry(QtCore.QRect(170, 180, 200, 20))
         self.txtPassword.setText("")
         self.txtPassword.setMaxLength(20)
         self.txtPassword.setEchoMode(QtWidgets.QLineEdit.Password)
         self.txtPassword.setClearButtonEnabled(True)
         self.txtPassword.setObjectName("txtPassword")
-        self.lnTcNumber = QtWidgets.QLabel(Dialog)
+        self.lnTcNumber = QtWidgets.QLabel(self.Dialog)
         self.lnTcNumber.setGeometry(QtCore.QRect(20, 120, 111, 16))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
@@ -50,7 +48,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.lnTcNumber.setFont(font)
         self.lnTcNumber.setObjectName("lnTcNumber")
-        self.lnPassword = QtWidgets.QLabel(Dialog)
+        self.lnPassword = QtWidgets.QLabel(self.Dialog)
         self.lnPassword.setGeometry(QtCore.QRect(40, 180, 61, 20))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
@@ -59,7 +57,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.lnPassword.setFont(font)
         self.lnPassword.setObjectName("lnPassword")
-        self.btnEnter = QtWidgets.QPushButton(Dialog)
+        self.btnEnter = QtWidgets.QPushButton(self.Dialog)
         self.btnEnter.setGeometry(QtCore.QRect(90, 240, 180, 30))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
@@ -68,7 +66,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.btnEnter.setFont(font)
         self.btnEnter.setObjectName("btnEnter")
-        self.btnRegister = QtWidgets.QPushButton(Dialog)
+        self.btnRegister = QtWidgets.QPushButton(self.Dialog)
         self.btnRegister.setGeometry(QtCore.QRect(90, 290, 180, 30))
         self.btnRegister.setMinimumSize(QtCore.QSize(180, 0))
         font = QtGui.QFont()
@@ -79,8 +77,8 @@ class Ui_Dialog(object):
         self.btnRegister.setFont(font)
         self.btnRegister.setObjectName("btnRegister")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(self.Dialog)
+        QtCore.QMetaObject.connectSlotsByName(self.Dialog)
         self.btnEnter.clicked.connect(self.userLogin) #silme komutu
         self.btnRegister.clicked.connect(self.userRegister) #kayıt komutu
 
@@ -103,30 +101,26 @@ class Ui_Dialog(object):
                 print("Hatalı Şifre!!!")
             else:
                 print("Giriş Başarılı...")
-                uiHome=homeScreen.Ui_Form(self.tcNumber)
-                uiHome.setupUi(self.home)
-                self.home.show()
+                self.homeWindow=QtWidgets.QWidget()
+                self.uiHome=Ui_Form(self.tcNumber)
+                self.uiHome.setupUi(self.homeWindow)
+                self.homeWindow.show()
+                self.Dialog.close()
+                
                 
         else:
             print("Kullanıcı Kayıtlı Değil...")
 
     def userRegister(self):
-        uiRegister=registerScreen.Ui_txtRegisterScreen()
-        uiRegister.setupUi(self.register)
-        self.register.show()
+        self.registerWindow=QtWidgets.QWidget()
+        self.uiRegister=Ui_txtRegisterScreen()
+        self.uiRegister.setupUi(self.registerWindow)
+        self.registerWindow.show()
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-
-    DialogHome=QtWidgets.QDialog()
-
-    DialogRegister=QtWidgets.QDialog()
-
-    DialogUserUpdate=QtWidgets.QDialog()
-    
-    ui = Ui_Dialog(DialogHome,DialogRegister,DialogUserUpdate)
+    Dialog=QtWidgets.QWidget()
+    ui = Ui_Dialog()
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
