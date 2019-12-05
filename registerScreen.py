@@ -184,7 +184,6 @@ class Ui_txtRegisterScreen(object):
         self.lnName.setText('')
         self.lnNameP.setText('')
         self.lnPasswordNumber.setText('')
-        self.birthday.setText('')
         self.lnAddress.setText('')
 
 
@@ -199,7 +198,6 @@ class Ui_txtRegisterScreen(object):
         return True
         
     def registerUser(self):
-        self.clearForm()
         userOperations=databaseOperation.UserOperations('database.db')
         self.firstName=self.lnName.text()
         self.lastName=self.lnNameP.text()
@@ -207,7 +205,7 @@ class Ui_txtRegisterScreen(object):
         self.birthday=self.lnDateTime.text()
         self.password=self.lnPasswordNumber.text()
         self.address=self.lnAddress.text()
-
+        self.clearForm()
 
         if(len(userOperations.getUser(self.tcNumber))!=0):
             print("Kullanıcı Zaten Var...!")

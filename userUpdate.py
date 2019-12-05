@@ -10,13 +10,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import databaseOperation
 
-class Ui_txtRegisterScreen(object):
+class UI_UserUpdate(object):
     tcNumber=''
     firstName=''
     lastName=''
     password=''
     birthday=''
     address=''
+
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
+        #self.getUser()
 
     def setupUi(self, txtRegisterScreen):
         txtRegisterScreen.setObjectName("txtRegisterScreen")
@@ -246,12 +250,3 @@ class Ui_txtRegisterScreen(object):
             print("Kullanıcı Silindi...")
         else:
             print("Hata Oluştu...")
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    txtRegisterScreen = QtWidgets.QDialog()
-    ui = Ui_txtRegisterScreen()
-    ui.setupUi(txtRegisterScreen)
-    txtRegisterScreen.show()
-    sys.exit(app.exec_())
