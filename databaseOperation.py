@@ -110,6 +110,10 @@ class QuestionOperations:
         self.query="select * from questions"
         return self.database.executeQuery(self.query).fetchall()
 
+    def getQuestionID(self,question):
+        self.query="select * from questions where question=\""+(str)(question)+"\""
+        return self.database.executeQuery(self.query).fetchall()[0][0]
+
 class AnswerOperations:
     databaseName=''
     database=''
@@ -118,24 +122,25 @@ class AnswerOperations:
         self.databaseName=databaseName
         self.database=dbOperations(self.databaseName)
 
-    def addAnswer(self,answerID,questionID,userTc,answer):
-        self.query="insert into answers values("+(str)(answerID)+","+(str)(questionID)+",\""+userTc+"\",answer=\""+answer+"\")"
+    def addAnswer(self,questionID,userTc,answer):
+        self.query="insert into answewrs values("+(str)(questionID)+",\""+userTc+"\",\""+answer+"\")"
         self.database.executeQuery(self.query)
         return True
 
     def dropAnswer(self,answerID,userTc):
-        self.query="delete from answers where userTc=\""+userTc+"\" and answerID="+(str)(answerID)+""
+        self.query="delete from answewrs where userTc=\""+userTc+"\" and answerID="+(str)(answerID)+""
         self.database.executeQuery(self.query)
         return True
 
     def updateAnswer(self,userTc,answerID,answer):
-        self.query="update answers set answer=\""+answer+"\"  where userTc=\""+userTc+"\" and answerID="+(str)(answerID)+""
+        self.query="update answewrs set answer=\""+answer+"\"  where userTc=\""+userTc+"\" and answerID="+(str)(answerID)+""
         self.database.executeQuery(self.query)
         return True
 
     def getAnswers(self,userTc):
-        self.query="select * from answers where userTc="+(str)(userTc)+""
+        self.query="select * from answewrs where userTc="+(str)(userTc)+""
         return self.database.executeQuery(self.query).fetchall()
+    
 
 
 

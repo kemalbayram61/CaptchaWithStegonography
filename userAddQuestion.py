@@ -8,10 +8,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import databaseOperation
+from homeScreen import Ui_Form
 
-
-class Ui_Form(object):
+class Ui_FormQuestion(object):
     tcNumber=''
+    dialog=''
+
     def __init__(self,tcNumber):
         self.tcNumber=tcNumber
 
@@ -109,6 +112,9 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        self.dialog=Form
+        self.loadQuestions()
+        self.btnDone.clicked.connect(self.addAnswers)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -121,3 +127,26 @@ class Ui_Form(object):
         self.lbAnswer3.setText(_translate("Form", "3.Cevap"))
         self.btnDone.setText(_translate("Form", "Tamam"))
 
+    def loadQuestions(self):
+        questionsOpr=databaseOperation.QuestionOperations('database.db')
+        questions=questionsOpr.getQuestions()
+        if(len(questions)!=0):
+            for question in questions:
+                self.cmbQuestion1.addItem(question[1])
+                self.cmbQuestion2.addItem(question[1])
+                self.cmbQuestion3.addItem(question[1])
+
+    def addAnswers(self):
+        questionsOpr=databaseOperation.QuestionOperations('database.db')
+        answerOpr=databaseOperation.AnswerOperations('database.db')
+        if(len(self.txtAnswer1.text())>0 and len(self.txtAnswer2.text())>0 and len(self.txtAnswer3.text())>0):
+            print(questionsOpr.getQuestionID(self.cmbQuestion1.currentText()))
+            answerOpr.addAnswer(questionsOpr.getQuestionID(self.cmbQuestion1.currentText()),self.tcNumber,self.txtAnswer1.text())
+            answerOpr.addAnswer(questionsOpr.getQuestionID(self.cmbQuestion2.currentText()),self.tcNumber,self.txtAnswer2.text())
+            answerOpr.addAnswer(questionsOpr.getQuestionID(self.cmbQuestion3.currentText()),self.tcNumber,self.txtAnswer3.text())
+        print("Yanıtlarınız Eklendi...")
+        self.dialog.close()
+        self.homeWindow=QtWidgets.QWidget()
+        self.uiHomeScreen=Ui_Form(self.tcNumber)
+        self.uiHomeScreen.setupUi(self.homeWindow)
+        self.homeWindow.show()

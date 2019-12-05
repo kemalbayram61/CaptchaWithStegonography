@@ -1,6 +1,6 @@
 import databaseOperation
 from PyQt5 import QtCore, QtGui, QtWidgets
-from userAddQuestion import Ui_Form
+from userAddQuestion import Ui_FormQuestion
 
 class Ui_txtRegisterScreen(object):
     tcNumber=''
@@ -216,7 +216,7 @@ class Ui_txtRegisterScreen(object):
             print("Kayıt Yapıldı...")
             self.dialog.close()
             self.questionWindow=QtWidgets.QWidget()
-            self.uiQuestionScreen=Ui_Form(self.tcNumber)
+            self.uiQuestionScreen=Ui_FormQuestion(self.tcNumber)
             self.uiQuestionScreen.setupUi(self.questionWindow)
             self.questionWindow.show()
         else:

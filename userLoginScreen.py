@@ -116,6 +116,7 @@ class Ui_Dialog(object):
         self.uiRegister=Ui_txtRegisterScreen()
         self.uiRegister.setupUi(self.registerWindow)
         self.registerWindow.show()
+        self.Dialog.close()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
