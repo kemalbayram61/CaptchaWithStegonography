@@ -41,8 +41,8 @@ class UI_UserUpdate(object):
         txtRegisterScreen.setMouseTracking(True)
         txtRegisterScreen.setFocusPolicy(QtCore.Qt.ClickFocus)
         txtRegisterScreen.setStyleSheet("")
-        txtRegisterScreen.setSizeGripEnabled(False)
-        txtRegisterScreen.setModal(False)
+        #txtRegisterScreen.setSizeGripEnabled(False)
+        #txtRegisterScreen.setModal(False)
         self.txtTcNumber_2 = QtWidgets.QLabel(txtRegisterScreen)
         self.txtTcNumber_2.setGeometry(QtCore.QRect(10, 10, 101, 20))
         font = QtGui.QFont()
@@ -229,7 +229,6 @@ class UI_UserUpdate(object):
             self.lnAddress.setText(user[0][5])
 
     def updateUser(self):
-        self.clearForm()
         userOperation=databaseOperation.UserOperations('database.db')
         self.firstName=self.lnName.text()
         self.lastName=self.lnNameP.text()
@@ -241,6 +240,7 @@ class UI_UserUpdate(object):
             print("Kullanıcı Güncellendi...")
         else:
             print("Hata Oluştu...!")
+        self.clearForm()
 
     def deleteUser(self):
         self.clearForm()

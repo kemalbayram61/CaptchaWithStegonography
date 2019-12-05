@@ -1,5 +1,6 @@
 import databaseOperation
 from PyQt5 import QtCore, QtGui, QtWidgets
+from userAddQuestion import Ui_Form
 
 class Ui_txtRegisterScreen(object):
     tcNumber=''
@@ -8,6 +9,7 @@ class Ui_txtRegisterScreen(object):
     password=''
     birthday=''
     address=''
+    dialog=''
 
 
     def setupUi(self, txtRegisterScreen):
@@ -28,8 +30,8 @@ class Ui_txtRegisterScreen(object):
         txtRegisterScreen.setFont(font)
         txtRegisterScreen.setMouseTracking(True)
         txtRegisterScreen.setFocusPolicy(QtCore.Qt.ClickFocus)
-        txtRegisterScreen.setSizeGripEnabled(False)
-        txtRegisterScreen.setModal(False)
+        #txtRegisterScreen.setSizeGripEnabled(False)
+        #txtRegisterScreen.setModal(False)
         self.label_3 = QtWidgets.QLabel(txtRegisterScreen)
         self.label_3.setGeometry(QtCore.QRect(133, 9, 16, 16))
         self.label_3.setText("")
@@ -168,6 +170,7 @@ class Ui_txtRegisterScreen(object):
         txtRegisterScreen.setTabOrder(self.lnDateTime, self.lnPasswordNumber)
         txtRegisterScreen.setTabOrder(self.lnPasswordNumber, self.lnAddress)
         txtRegisterScreen.setTabOrder(self.lnAddress, self.lnNameP)
+        self.dialog=txtRegisterScreen
 
     def retranslateUi(self, txtRegisterScreen):
         _translate = QtCore.QCoreApplication.translate
@@ -211,15 +214,11 @@ class Ui_txtRegisterScreen(object):
             print("Kullanıcı Zaten Var...!")
         elif(self.controlUser() and userOperations.addUser(self.tcNumber,self.firstName,self.lastName,self.birthday,self.password,self.address)):
             print("Kayıt Yapıldı...")
+            self.dialog.close()
+            self.questionWindow=QtWidgets.QWidget()
+            self.uiQuestionScreen=Ui_Form(self.tcNumber)
+            self.uiQuestionScreen.setupUi(self.questionWindow)
+            self.questionWindow.show()
         else:
             print("Yazım Hatası Var...!")
             
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    txtRegisterScreen = QtWidgets.QDialog()
-    ui = Ui_txtRegisterScreen()
-    ui.setupUi(txtRegisterScreen)
-    txtRegisterScreen.show()
-    sys.exit(app.exec_())

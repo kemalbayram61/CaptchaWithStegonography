@@ -8,9 +8,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import databaseOperation
 
+class UI_ProfileInformation(object):
+    tcNumber=''
+    dialog=''
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
 
-class Ui_txtRegisterScreen(object):
     def setupUi(self, txtRegisterScreen):
         txtRegisterScreen.setObjectName("txtRegisterScreen")
         txtRegisterScreen.setWindowModality(QtCore.Qt.WindowModal)
@@ -30,8 +35,8 @@ class Ui_txtRegisterScreen(object):
         txtRegisterScreen.setMouseTracking(True)
         txtRegisterScreen.setFocusPolicy(QtCore.Qt.ClickFocus)
         txtRegisterScreen.setStyleSheet("")
-        txtRegisterScreen.setSizeGripEnabled(False)
-        txtRegisterScreen.setModal(False)
+        #txtRegisterScreen.setSizeGripEnabled(False)
+        #txtRegisterScreen.setModal(False)
         self.groupBox = QtWidgets.QGroupBox(txtRegisterScreen)
         self.groupBox.setGeometry(QtCore.QRect(20, 20, 361, 361))
         self.groupBox.setObjectName("groupBox")
@@ -124,6 +129,9 @@ class Ui_txtRegisterScreen(object):
 
         self.retranslateUi(txtRegisterScreen)
         QtCore.QMetaObject.connectSlotsByName(txtRegisterScreen)
+        self.getUser()
+        self.dialog=txtRegisterScreen
+        self.btnUpdate.clicked.connect(self.Close)
 
     def retranslateUi(self, txtRegisterScreen):
         _translate = QtCore.QCoreApplication.translate
@@ -135,14 +143,17 @@ class Ui_txtRegisterScreen(object):
         self.lbNameP.setText(_translate("txtRegisterScreen", "SOYADI"))
         self.lbAddress.setText(_translate("txtRegisterScreen", "ADRES"))
         self.btnUpdate.setText(_translate("txtRegisterScreen", "Tamam"))
-import source_rc
 
+    def getUser(self):
+        userOperation=databaseOperation.UserOperations('database.db')
+        user=userOperation.getUser(self.tcNumber)
+        if(len(user)!=0):
+            self.lbNameView.setText(user[0][1])
+            self.lbNamePView.setText(user[0][2])
+            self.lbPasswordNumberView.setText(user[0][3])
+            self.lbDateView.setText(user[0][4])
+            self.lbAddressView.setText(user[0][5])
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    txtRegisterScreen = QtWidgets.QDialog()
-    ui = Ui_txtRegisterScreen()
-    ui.setupUi(txtRegisterScreen)
-    txtRegisterScreen.show()
-    sys.exit(app.exec_())
+    def Close(self):
+        self.dialog.close()
+
