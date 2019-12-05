@@ -103,7 +103,7 @@ class Ui_Dialog(object):
                 print("Hatalı Şifre!!!")
             else:
                 print("Giriş Başarılı...")
-                uiHome=homeScreen.Ui_Form(self.uupdate,self.tcNumber)
+                uiHome=homeScreen.Ui_Form(self.tcNumber)
                 uiHome.setupUi(self.home)
                 self.home.show()
                 
