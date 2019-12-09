@@ -28,6 +28,7 @@ class Ui_CaptchaSelectionScreenModule(object):
     caseB7=False
     caseB8=False
     caseB9=False
+    objectFrames=''
 
     def __init__(self,tcNumber,dstTc,amount):
         self.tcNumber=tcNumber
@@ -123,15 +124,20 @@ class Ui_CaptchaSelectionScreenModule(object):
         self.btnDone.setText(_translate("CaptchaSelectionScreenModule", "Onayla"))
 
     def questionScreen(self):
-        self.questionWindow=QtWidgets.QWidget()
-        self.uiquestion=UI_QA(self.tcNumber)
-        self.uiquestion.setupUi(self.questionWindow)
-        self.questionWindow.show()
-        self.dialog.close()
+        if(self.controlClickedFrames()):
+            self.questionWindow=QtWidgets.QWidget()
+            self.uiquestion=UI_QA(self.tcNumber,self.dstTc,self.amount)
+            self.uiquestion.setupUi(self.questionWindow)
+            self.questionWindow.show()
+            self.dialog.close()
+        else:
+            self.dialog.close()
 
     def getImage(self):
         imageProcessing=imageParser.ParseProcess()
-        self.frames=imageProcessing.getFrames()
+        imagepars=imageProcessing.getFrames()
+        self.frames=imagepars[0]
+        self.objectFrames=imagepars[1]
         if(len(self.frames)==9):
             imageProcessing.saveClickedFrames(self.frames)
             cv2.imwrite('frames/f1.png',self.frames[0])
@@ -253,3 +259,32 @@ class Ui_CaptchaSelectionScreenModule(object):
             self.btnParseSelect9.setIcon(QtGui.QIcon('frames\\f9.png'))
             self.btnParseSelect9.setIconSize(QtCore.QSize(61,61))
 
+    def getClickedFrames(self):
+        clicked=''
+        if(self.caseB1):
+            clicked+='1,'
+        if(self.caseB2):
+            clicked+='2,'
+        if(self.caseB3):
+            clicked+='3,'
+        if(self.caseB4):
+            clicked+='4,'
+        if(self.caseB5):
+            clicked+='5,'
+        if(self.caseB6):
+            clicked+='6,'
+        if(self.caseB7):
+            clicked+='7,'
+        if(self.caseB8):
+            clicked+='8,'
+        if(self.caseB9):
+            clicked+='9'
+        return clicked
+
+    def controlClickedFrames(self):
+        print(self.objectFrames)
+        print(self.getClickedFrames())
+        if(self.objectFrames==self.getClickedFrames()):
+            return True
+        else:
+            return False

@@ -8,13 +8,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from databaseOperation import QuestionOperations
 
 class UI_QA(object):
     dialog=''
     tcNumber=''
-    def __init__(self,tcNumber):
+    dstTc=''
+    amount=0
+    def __init__(self,tcNumber,dstTc,amount):
         self.tcNumber=tcNumber
+        self.dstTc=dstTc
+        self.amount=amount
 
     def setupUi(self, Form):
         Form.setObjectName("Form")

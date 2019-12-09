@@ -40,7 +40,7 @@ class ParseProcess:
         path=self.getRandomImagePath()
         if(len(path)>0):
             self.image=cv2.imread(path[0])
-            return self.parseImage(self.image)
+            return self.parseImage(self.image),path[1]
         else:
             return False
 
