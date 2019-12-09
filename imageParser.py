@@ -1,23 +1,15 @@
-import cv2
+import cv2,numpy
+from databaseOperation import imageOperations
 
 class ParseProcess:
 
-    def __init__(self,FrameCount,GetImageCount,FileName):
-        self.frameCount=FrameCount
-        self.fileName=FileName
-        self.getImageCount=GetImageCount
-        self.image=FileName #sahte ilk atama
-
     def parseImage(self,image):
 
-        frameCountX=(int)((self.frameCount)**0.5)
-        frameCountY=(int)((self.frameCount)**0.5)
+        frameCountX=3
+        frameCountY=3
 
-        frameSizeX=(int)(image.shape[0]/frameCountX)
-        frameSizeY=(int)(image.shape[1]/frameCountY)
-
-        print("Frame Count: ",frameCountX,"X",frameCountY) #istenilen frameCount miktarına göre oluşacak olan yeni captcha miktarını yazar
-        print("Frame Size: ",frameSizeX,"X",frameSizeY) #istenilen frameCount miktarına göre oluşacak olan herbir karenin ebatını yazar
+        frameSizeX=61
+        frameSizeY=61
 
         frames=[]
         counterX=0
@@ -28,23 +20,41 @@ class ParseProcess:
                 cropImg = image[counterY:counterY+frameSizeY, counterX:counterX+frameSizeX]
                 counterX=counterX+frameSizeX
                 frames.append(cropImg)
-                #cv2.imshow("crpImg"+(str)(len(frames)),cropImg)  #oluşan her bir frameyi gösterme
 
             counterY=counterY+frameSizeY
             counterX=0
 
         return frames
 
+    def getRandomImagePath(self):
+        import random
+        imageProces=imageOperations('database.db')
+        images=imageProces.getImages()
+        if(len(images)>0):
+            rnd=random.randint(0,len(images)-1)
+            return images[rnd][1],images[rnd][3]
+        else:
+            return images
 
-
-    def getFrames(self,GetImageCount):
-        self.getImageCount=self.getImageCount+1
-        self.image=cv2.imread(self.fileName)
-        self.getImageCount=GetImageCount
-        if(GetImageCount==0):
+    def getFrames(self):
+        path=self.getRandomImagePath()
+        if(len(path)>0):
+            self.image=cv2.imread(path[0])
             return self.parseImage(self.image)
         else:
-            self.frameCount=(self.frameCount**0.5+1)**2
-            return self.parseImage(self.image)
-        #cv2.imshow("Image Count : "+(str)(self.getImageCount),self.image) #genel resmi göstertme
-        #cv2.waitKey(0)
+            return False
+
+    def convertGray(self,frame):
+        resultImage=numpy.zeros((frame.shape[0],frame.shape[1],1),dtype=numpy.uint8)
+        for i in range(frame.shape[0]):
+            for j in range(frame.shape[1]):
+                resultImage[i,j]=frame[i,j,0]*0.299+frame[i,j,1]*0.587+frame[i,j,2]*0.114
+        return resultImage
+
+    def saveClickedFrames(self,frames):
+        counter=1
+        for frame in frames:
+            frame=self.convertGray(frame)
+            cv2.imwrite('frames/bf'+(str)(counter)+'.png',frame)
+            counter=counter+1
+

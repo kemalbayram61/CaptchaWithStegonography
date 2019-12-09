@@ -9,12 +9,30 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from questionAnswerScreen import UI_QA
+import imageParser
+import numpy as np
+import cv2
 
 class Ui_CaptchaSelectionScreenModule(object):
     dialog=''
     tcNumber=''
-    def __init__(self,tcNumber):
+    dstTc=''
+    amount=0
+    frames=''
+    caseB1=False
+    caseB2=False
+    caseB3=False
+    caseB4=False
+    caseB5=False
+    caseB6=False
+    caseB7=False
+    caseB8=False
+    caseB9=False
+
+    def __init__(self,tcNumber,dstTc,amount):
         self.tcNumber=tcNumber
+        self.dstTc=dstTc
+        self.amount=amount
 
     def setupUi(self, CaptchaSelectionScreenModule):
         CaptchaSelectionScreenModule.setObjectName("CaptchaSelectionScreenModule")
@@ -87,7 +105,17 @@ class Ui_CaptchaSelectionScreenModule(object):
         self.retranslateUi(CaptchaSelectionScreenModule)
         QtCore.QMetaObject.connectSlotsByName(CaptchaSelectionScreenModule)
         self.dialog=CaptchaSelectionScreenModule
+        self.getImage()
         self.btnDone.clicked.connect(self.questionScreen)
+        self.btnParseSelect1.clicked.connect(self.clickedBtn1)
+        self.btnParseSelect2.clicked.connect(self.clickedBtn2)
+        self.btnParseSelect3.clicked.connect(self.clickedBtn3)
+        self.btnParseSelect4.clicked.connect(self.clickedBtn4)
+        self.btnParseSelect5.clicked.connect(self.clickedBtn5)
+        self.btnParseSelect6.clicked.connect(self.clickedBtn6)
+        self.btnParseSelect7.clicked.connect(self.clickedBtn7)
+        self.btnParseSelect8.clicked.connect(self.clickedBtn8)
+        self.btnParseSelect9.clicked.connect(self.clickedBtn9)
 
     def retranslateUi(self, CaptchaSelectionScreenModule):
         _translate = QtCore.QCoreApplication.translate
@@ -100,3 +128,128 @@ class Ui_CaptchaSelectionScreenModule(object):
         self.uiquestion.setupUi(self.questionWindow)
         self.questionWindow.show()
         self.dialog.close()
+
+    def getImage(self):
+        imageProcessing=imageParser.ParseProcess()
+        self.frames=imageProcessing.getFrames()
+        if(len(self.frames)==9):
+            imageProcessing.saveClickedFrames(self.frames)
+            cv2.imwrite('frames/f1.png',self.frames[0])
+            self.btnParseSelect1.setIcon(QtGui.QIcon('frames\\f1.png'))
+            self.btnParseSelect1.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f2.png',self.frames[1])
+            self.btnParseSelect2.setIcon(QtGui.QIcon('frames\\f2.png'))
+            self.btnParseSelect2.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f3.png',self.frames[2])
+            self.btnParseSelect3.setIcon(QtGui.QIcon('frames\\f3.png'))
+            self.btnParseSelect3.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f4.png',self.frames[3])
+            self.btnParseSelect4.setIcon(QtGui.QIcon('frames\\f4.png'))
+            self.btnParseSelect4.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f5.png',self.frames[4])
+            self.btnParseSelect5.setIcon(QtGui.QIcon('frames\\f5.png'))
+            self.btnParseSelect5.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f6.png',self.frames[5])
+            self.btnParseSelect6.setIcon(QtGui.QIcon('frames\\f6.png'))
+            self.btnParseSelect6.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f7.png',self.frames[6])
+            self.btnParseSelect7.setIcon(QtGui.QIcon('frames\\f7.png'))
+            self.btnParseSelect7.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f8.png',self.frames[7])
+            self.btnParseSelect8.setIcon(QtGui.QIcon('frames\\f8.png'))
+            self.btnParseSelect8.setIconSize(QtCore.QSize(61,61))
+
+            cv2.imwrite('frames/f9.png',self.frames[8])
+            self.btnParseSelect9.setIcon(QtGui.QIcon('frames\\f9.png'))
+            self.btnParseSelect9.setIconSize(QtCore.QSize(61,61))
+
+    def clickedBtn1(self):
+        if(self.caseB1==False):
+            self.caseB1=True
+            self.btnParseSelect1.setIcon(QtGui.QIcon('frames\\bf1.png'))
+            self.btnParseSelect1.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB1=False
+            self.btnParseSelect1.setIcon(QtGui.QIcon('frames\\f1.png'))
+            self.btnParseSelect1.setIconSize(QtCore.QSize(61,61))
+
+    def clickedBtn2(self):
+        if(self.caseB2==False):
+            self.caseB2=True
+            self.btnParseSelect2.setIcon(QtGui.QIcon('frames\\bf2.png'))
+            self.btnParseSelect2.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB2=False
+            self.btnParseSelect2.setIcon(QtGui.QIcon('frames\\f2.png'))
+            self.btnParseSelect2.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn3(self):
+        if(self.caseB3==False):
+            self.caseB3=True
+            self.btnParseSelect3.setIcon(QtGui.QIcon('frames\\bf3.png'))
+            self.btnParseSelect3.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB3=False
+            self.btnParseSelect3.setIcon(QtGui.QIcon('frames\\f3.png'))
+            self.btnParseSelect3.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn4(self):
+        if(self.caseB4==False):
+            self.caseB4=True
+            self.btnParseSelect4.setIcon(QtGui.QIcon('frames\\bf4.png'))
+            self.btnParseSelect4.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB4=False
+            self.btnParseSelect4.setIcon(QtGui.QIcon('frames\\f4.png'))
+            self.btnParseSelect4.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn5(self):
+        if(self.caseB5==False):
+            self.caseB5=True
+            self.btnParseSelect5.setIcon(QtGui.QIcon('frames\\bf5.png'))
+            self.btnParseSelect5.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB5=False
+            self.btnParseSelect5.setIcon(QtGui.QIcon('frames\\f5.png'))
+            self.btnParseSelect5.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn6(self):
+        if(self.caseB6==False):
+            self.caseB6=True
+            self.btnParseSelect6.setIcon(QtGui.QIcon('frames\\bf6.png'))
+            self.btnParseSelect6.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB6=False
+            self.btnParseSelect6.setIcon(QtGui.QIcon('frames\\f6.png'))
+            self.btnParseSelect6.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn7(self):
+        if(self.caseB7==False):
+            self.caseB7=True
+            self.btnParseSelect7.setIcon(QtGui.QIcon('frames\\bf7.png'))
+            self.btnParseSelect7.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB7=False
+            self.btnParseSelect7.setIcon(QtGui.QIcon('frames\\f7.png'))
+            self.btnParseSelect7.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn8(self):
+        if(self.caseB8==False):
+            self.caseB8=True
+            self.btnParseSelect8.setIcon(QtGui.QIcon('frames\\bf8.png'))
+            self.btnParseSelect8.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB8=False
+            self.btnParseSelect8.setIcon(QtGui.QIcon('frames\\f8.png'))
+            self.btnParseSelect8.setIconSize(QtCore.QSize(61,61))
+    def clickedBtn9(self):
+        if(self.caseB9==False):
+            self.caseB9=True
+            self.btnParseSelect9.setIcon(QtGui.QIcon('frames\\bf9.png'))
+            self.btnParseSelect9.setIconSize(QtCore.QSize(61,61))
+        else:
+            self.caseB9=False
+            self.btnParseSelect9.setIcon(QtGui.QIcon('frames\\f9.png'))
+            self.btnParseSelect9.setIconSize(QtCore.QSize(61,61))
+

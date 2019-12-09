@@ -8,9 +8,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import databaseOperation
 
 class Ui_Hesapozeti(object):
+    tcNumber=''
+    dialog=''
+    def __init__(self,tcNumber):
+        self.tcNumber=tcNumber
+
     def setupUi(self, Hesapozeti):
         Hesapozeti.setObjectName("Hesapozeti")
         Hesapozeti.resize(400, 500)
@@ -44,6 +49,10 @@ class Ui_Hesapozeti(object):
 
         self.retranslateUi(Hesapozeti)
         QtCore.QMetaObject.connectSlotsByName(Hesapozeti)
+        self.dialog=Hesapozeti
+        self.getAccountAmount()
+        self.btnDone.clicked.connect(self.Close)
+
 
     def retranslateUi(self, Hesapozeti):
         _translate = QtCore.QCoreApplication.translate
@@ -52,12 +61,12 @@ class Ui_Hesapozeti(object):
         self.lbAccountMoneyView.setText(_translate("Hesapozeti", "TextLabel"))
         self.btnDone.setText(_translate("Hesapozeti", "Tamam"))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Hesapozeti = QtWidgets.QWidget()
-    ui = Ui_Hesapozeti()
-    ui.setupUi(Hesapozeti)
-    Hesapozeti.show()
-    sys.exit(app.exec_())
+    def getAccountAmount(self):
+        accountOpr=databaseOperation.accountOperations('database.db')
+        account=accountOpr.getAccount(self.tcNumber)
+        if(len(account)>0):
+            self.lbAccountMoneyView.setText((str)(account[0][1]))
+            self.lbUserName.setText((str)(account[0][0]))
+            
+    def Close(self):
+        self.dialog.close()

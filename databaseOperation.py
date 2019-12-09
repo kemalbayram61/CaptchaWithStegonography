@@ -26,7 +26,9 @@ class UserOperations:
         self.database=dbOperations(self.databaseName)
 
     def addUser(self,tcNumber,firstName,lastName,birthday,password,address):
-        self.query="insert into users (tcNumber,firstName,lastName,password,birthday,address) values (\""+tcNumber+"\",\""+firstName+"\",\""+lastName+"\",\""+password+"\",\""+birthday+"\",\""+address+"\")"
+        self.query="insert into users values (\""+tcNumber+"\",\""+firstName+"\",\""+lastName+"\",\""+password+"\",\""+birthday+"\",\""+address+"\")"
+        self.database.executeQuery(self.query)
+        self.query="insert into amounts values(\""+tcNumber+"\",1000)"
         self.database.executeQuery(self.query)
         return True
 
@@ -37,6 +39,8 @@ class UserOperations:
 
     def dropUser(self,tcNumber):
         self.query="delete from users where tcNumber=\""+tcNumber+"\""
+        self.database.executeQuery(self.query)
+        self.query="delete from answewrs where userTc=\""+tcNumber+"\""
         self.database.executeQuery(self.query)
         return True
 
@@ -142,5 +146,14 @@ class AnswerOperations:
         return self.database.executeQuery(self.query).fetchall()
     
 
+class accountOperations:
+    databaseName=''
+    database=''
+    query=''
+    def __init__(self,databaseName):
+        self.databaseName=databaseName
+        self.database=dbOperations(self.databaseName)
 
-
+    def getAccount(self,userTc):
+        self.query="select * from amounts where userTcNumber="+(str)(userTc)+""
+        return self.database.executeQuery(self.query).fetchall()

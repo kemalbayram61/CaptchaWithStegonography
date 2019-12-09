@@ -1,18 +1,14 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'SendMoneyModule.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from captchaScreen import Ui_CaptchaSelectionScreenModule
+import databaseOperation
 
 class UI_SendMoney(object):
     tcNumber=''
     dialog=''
+    dstTc=''
+    amount=0
+
     def __init__(self,tcNumber):
         self.tcNumber=tcNumber
 
@@ -92,6 +88,7 @@ class UI_SendMoney(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         self.btnSendMoney.clicked.connect(self.captchaScreen)
         self.dialog=Dialog
+        self.getAmount()
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -103,8 +100,32 @@ class UI_SendMoney(object):
         self.lbBalance.setText(_translate("Dialog", "Mevcut Bakiye"))
 
     def captchaScreen(self):
-        self.captchaWindow=QtWidgets.QWidget()
-        self.uiCaptcha=Ui_CaptchaSelectionScreenModule(self.tcNumber)
-        self.uiCaptcha.setupUi(self.captchaWindow)
-        self.captchaWindow.show()
-        self.dialog.close()
+        if(self.controlDstUser()):
+            self.captchaWindow=QtWidgets.QWidget()
+            self.uiCaptcha=Ui_CaptchaSelectionScreenModule(self.tcNumber,self.dstTc,self.amount)
+            self.uiCaptcha.setupUi(self.captchaWindow)
+            self.captchaWindow.show()
+            self.dialog.close()
+        else:
+            print("Hata Var...")
+
+    def controlDstUser(self):
+        self.dstTc=self.txtDestinationTcNumber_2.text()
+        userOperation=databaseOperation.UserOperations('database.db')
+        user=userOperation.getUser(self.dstTc)
+        if(self.txtDestinationTcNumber_2.text()==self.tcNumber):
+            print("Hedef Kullanıcı Farklı Kişi Olmalı...")
+            return False
+
+        if(len(user)>0):
+            self.amount=(int)(self.txtSendAmount.text())
+            return True
+        else:
+            return False
+
+    def getAmount(self):
+        amountOpr=databaseOperation.accountOperations('database.db')
+        account=amountOpr.getAccount(self.tcNumber)
+        if(len(account)>0):
+            self.label.setText((str)(account[0][1]))
+            self.txtDestinationTcNumber.setText((str)(account[0][0]))
