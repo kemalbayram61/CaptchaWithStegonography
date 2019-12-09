@@ -32,7 +32,7 @@ class ParseProcess:
         images=imageProces.getImages()
         if(len(images)>0):
             rnd=random.randint(0,len(images)-1)
-            return images[rnd][1],images[rnd][3]
+            return images[rnd][1],images[rnd][3],images[rnd][2]
         else:
             return images
 
@@ -40,7 +40,7 @@ class ParseProcess:
         path=self.getRandomImagePath()
         if(len(path)>0):
             self.image=cv2.imread(path[0])
-            return self.parseImage(self.image),path[1]
+            return self.parseImage(self.image),path[1],path[2]
         else:
             return False
 
@@ -57,4 +57,3 @@ class ParseProcess:
             frame=self.convertGray(frame)
             cv2.imwrite('frames/bf'+(str)(counter)+'.png',frame)
             counter=counter+1
-

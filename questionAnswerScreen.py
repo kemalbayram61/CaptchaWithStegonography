@@ -8,13 +8,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from databaseOperation import QuestionOperations
+import databaseOperation
 
 class UI_QA(object):
     dialog=''
     tcNumber=''
     dstTc=''
+    questionId=0
     amount=0
+    answerCount=0
+
     def __init__(self,tcNumber,dstTc,amount):
         self.tcNumber=tcNumber
         self.dstTc=dstTc
@@ -43,6 +46,7 @@ class UI_QA(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
         self.dialog=Form
         self.btnDone.clicked.connect(self.complate)
+        self.getQuestions()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -50,4 +54,33 @@ class UI_QA(object):
         self.btnDone.setText(_translate("Form", "Onayla"))
 
     def complate(self):
-        self.dialog.close()
+        accountOpr=databaseOperation.accountOperations('database.db')
+        if(self.controlAnswer()):
+            if(accountOpr.transferMoney(self.tcNumber,self.dstTc,self.amount)):
+                print("Para Transferi Basarılı...")
+                self.dialog.close()
+            else:
+                print("Transfer Yapılamadı...")
+        elif(self.answerCount<3):
+            print("Son "+(str)(3-self.answerCount)+" Hakkınız Kaldı...")
+        else:
+            print("Transfer Yapılamadı...")
+            self.dialog.close()
+    
+    def getQuestions(self):
+        import random
+        questionOpr=databaseOperation.QuestionOperations('database.db')
+        questions=questionOpr.getQuestions()
+        if(len(questions)>0):
+            qindex=random.randint(0,len(questions)-1)
+            self.questionId=questions[qindex][0]
+            self.lbQuestionView.setText(questions[qindex][1])
+
+    def controlAnswer(self):
+        answerOpr=databaseOperation.AnswerOperations('database.db')
+        answer=answerOpr.getAnswer(self.tcNumber,self.questionId)
+        if(self.txtAnswerEnter.text()==answer[0][2]):
+            return True
+        else:
+            self.answerCount+=1
+            return False

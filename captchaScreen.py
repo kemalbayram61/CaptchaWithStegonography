@@ -42,6 +42,10 @@ class Ui_CaptchaSelectionScreenModule(object):
         CaptchaSelectionScreenModule.setMinimumSize(QtCore.QSize(400, 500))
         CaptchaSelectionScreenModule.setMaximumSize(QtCore.QSize(400, 500))
         CaptchaSelectionScreenModule.setMouseTracking(True)
+        self.lblCaptchaQ = QtWidgets.QLabel(CaptchaSelectionScreenModule)
+        self.lblCaptchaQ.setGeometry(QtCore.QRect(10, 00, 141, 21))
+        self.lblCaptchaQ.setObjectName("lbCaptchaQuestion")
+
         self.btnParseSelect1 = QtWidgets.QPushButton(CaptchaSelectionScreenModule)
         self.btnParseSelect1.setGeometry(QtCore.QRect(70, 90, 61, 61))
         self.btnParseSelect1.setText("")
@@ -122,6 +126,7 @@ class Ui_CaptchaSelectionScreenModule(object):
         _translate = QtCore.QCoreApplication.translate
         CaptchaSelectionScreenModule.setWindowTitle(_translate("CaptchaSelectionScreenModule", "CaptchaSelectionScreenModule"))
         self.btnDone.setText(_translate("CaptchaSelectionScreenModule", "Onayla"))
+        self.lblCaptchaQ.setText(_translate("CaptchaSelectionScreenModule", "Captcha Soru"))
 
     def questionScreen(self):
         if(self.controlClickedFrames()):
@@ -138,6 +143,7 @@ class Ui_CaptchaSelectionScreenModule(object):
         imagepars=imageProcessing.getFrames()
         self.frames=imagepars[0]
         self.objectFrames=imagepars[1]
+        self.lblCaptchaQ.setText(imagepars[2]+" olan kareleri seçiniz...")
         if(len(self.frames)==9):
             imageProcessing.saveClickedFrames(self.frames)
             cv2.imwrite('frames/f1.png',self.frames[0])

@@ -137,12 +137,12 @@ class AnswerOperations:
         return True
 
     def updateAnswer(self,userTc,answerID,answer):
-        self.query="update answewrs set answer=\""+answer+"\"  where userTc=\""+userTc+"\" and answerID="+(str)(answerID)+""
+        self.query="update answewrs set answewr=\""+answer+"\"  where userTc=\""+userTc+"\" and answerID="+(str)(answerID)+""
         self.database.executeQuery(self.query)
         return True
 
-    def getAnswers(self,userTc):
-        self.query="select * from answewrs where userTc="+(str)(userTc)+""
+    def getAnswer(self,userTc,questionID):
+        self.query="select * from answewrs where userTc="+(str)(userTc)+" and questionID=\""+(str)(questionID)+"\""
         return self.database.executeQuery(self.query).fetchall()
     
 
@@ -157,3 +157,13 @@ class accountOperations:
     def getAccount(self,userTc):
         self.query="select * from amounts where userTcNumber="+(str)(userTc)+""
         return self.database.executeQuery(self.query).fetchall()
+
+    def transferMoney(self,srcTc,dstTc,amount):
+        self.query="update amounts set amount=amount+"+(str)(amount)+" where userTcNumber=\""+(str)(dstTc)+"\""
+        self.database.executeQuery(self.query)
+        print("Para "+dstTc+" Hesabına Aktarıldı.")
+        self.query="update amounts set amount=amount-"+(str)(amount)+" where userTcNumber=\""+(str)(srcTc)+"\""
+        self.database.executeQuery(self.query)
+        print("Para "+srcTc+" Hesabından Düşürüldü.")
+        return True
+
