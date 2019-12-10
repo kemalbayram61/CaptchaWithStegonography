@@ -9,6 +9,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import databaseOperation
+import stepic
+from PIL import Image
 
 class UI_QA(object):
     dialog=''
@@ -56,11 +58,15 @@ class UI_QA(object):
     def complate(self):
         accountOpr=databaseOperation.accountOperations('database.db')
         if(self.controlAnswer()):
-            if(accountOpr.transferMoney(self.tcNumber,self.dstTc,self.amount)):
-                print("Para Transferi Basarılı...")
-                self.dialog.close()
+            if(self.controlStegoImage()):
+                if(accountOpr.transferMoney(self.tcNumber,self.dstTc,self.amount)):
+                        print("Para Transferi Basarılı...")
+                        self.dialog.close()
+                else:
+                    print("Veri Tabanına ekleme Hatası Oluştu...")
             else:
-                print("Transfer Yapılamadı...")
+                print("Resime Gizlenen Bilgi Değiştirilmiş İşlem İptal Edildi...")
+                self.dialog.close()
         elif(self.answerCount<3):
             print("Son "+(str)(3-self.answerCount)+" Hakkınız Kaldı...")
         else:
@@ -83,4 +89,15 @@ class UI_QA(object):
             return True
         else:
             self.answerCount+=1
+            return False
+
+    def controlStegoImage(self):
+        self.key="kaobkaob"
+        im=Image.open("frames/f5.png")
+        message=stepic.decode(im)
+        if(message==self.key):
+            print("Gizlenen:"+message+" Key:"+self.key)
+            return True
+        else:
+            print("Gizlenen:"+message+" Key:"+self.key)
             return False

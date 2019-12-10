@@ -12,6 +12,8 @@ from questionAnswerScreen import UI_QA
 import imageParser
 import numpy as np
 import cv2
+import stepic
+from PIL import Image
 
 class Ui_CaptchaSelectionScreenModule(object):
     dialog=''
@@ -122,6 +124,10 @@ class Ui_CaptchaSelectionScreenModule(object):
         self.btnParseSelect8.clicked.connect(self.clickedBtn8)
         self.btnParseSelect9.clicked.connect(self.clickedBtn9)
 
+        orgImage=Image.open("frames/f5.png") ############################Stegonography encode işlemi
+        stgImage = stepic.encode(orgImage, b'kaobkaob')
+        stgImage.save("frames/f5.png", 'PNG')
+
     def retranslateUi(self, CaptchaSelectionScreenModule):
         _translate = QtCore.QCoreApplication.translate
         CaptchaSelectionScreenModule.setWindowTitle(_translate("CaptchaSelectionScreenModule", "CaptchaSelectionScreenModule"))
@@ -181,6 +187,8 @@ class Ui_CaptchaSelectionScreenModule(object):
             cv2.imwrite('frames/f9.png',self.frames[8])
             self.btnParseSelect9.setIcon(QtGui.QIcon('frames\\f9.png'))
             self.btnParseSelect9.setIconSize(QtCore.QSize(61,61))
+
+
 
     def clickedBtn1(self):
         if(self.caseB1==False):

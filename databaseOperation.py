@@ -1,4 +1,5 @@
 import sqlite3
+import hashlib
 
 class dbOperations:
     database=''
@@ -25,7 +26,15 @@ class UserOperations:
         self.databaseName=databaseName
         self.database=dbOperations(self.databaseName)
 
+    def encryptSHA256(self,password):
+        password=hashlib.sha256(password.encode()).hexdigest()
+        result=""
+        for i in range(10):
+            result+=password[i]
+        return result
+
     def addUser(self,tcNumber,firstName,lastName,birthday,password,address):
+        password=self.encryptSHA256(password)
         self.query="insert into users values (\""+tcNumber+"\",\""+firstName+"\",\""+lastName+"\",\""+password+"\",\""+birthday+"\",\""+address+"\")"
         self.database.executeQuery(self.query)
         self.query="insert into amounts values(\""+tcNumber+"\",1000)"
@@ -41,6 +50,8 @@ class UserOperations:
         self.query="delete from users where tcNumber=\""+tcNumber+"\""
         self.database.executeQuery(self.query)
         self.query="delete from answewrs where userTc=\""+tcNumber+"\""
+        self.database.executeQuery(self.query)
+        self.query="delete from amounts where userTcNumber=\""+tcNumber+"\""
         self.database.executeQuery(self.query)
         return True
 

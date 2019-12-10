@@ -13,6 +13,7 @@ from homeScreen import Ui_Form
 from registerScreen import Ui_txtRegisterScreen
 from userUpdate import UI_UserUpdate
 import sys
+import hashlib
 
 class Ui_Dialog(object):
     tcNumber=''
@@ -90,14 +91,24 @@ class Ui_Dialog(object):
         self.btnEnter.setText(_translate("Dialog", "Tamam"))
         self.btnRegister.setText(_translate("Dialog", "Kayıt ol"))
 
+    def encryptSHA256(self,password):
+        password=hashlib.sha256(password.encode()).hexdigest()
+        result=""
+        for i in range(10):
+            result+=password[i]
+        return result
 
     def userLogin(self):
         userOperations=databaseOperation.UserOperations('database.db')
         self.tcNumber=self.txtTcNumber.text()
         user=userOperations.getUser(self.tcNumber)
+
+        passwordText=self.txtPassword.text()#####################################################Şifreleme 
+        passwordText=self.encryptSHA256(passwordText)
+        
         if(len(user)!=0):
             self.password=user[0][3]
-            if(self.txtPassword.text()!=self.password):
+            if(passwordText!=self.password):
                 print("Hatalı Şifre!!!")
             else:
                 print("Giriş Başarılı...")
