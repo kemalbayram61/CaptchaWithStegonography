@@ -5,12 +5,14 @@ import databaseOperation
 
 class UI_SendMoney(object):
     tcNumber=''
+    loginTcNumber=''
     dialog=''
     dstTc=''
     amount=0
 
     def __init__(self,tcNumber):
         self.tcNumber=tcNumber
+        self.loginTcNumber=tcNumber
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -102,7 +104,7 @@ class UI_SendMoney(object):
     def captchaScreen(self):
         if(self.controlDstUser()):
             self.captchaWindow=QtWidgets.QWidget()
-            self.uiCaptcha=Ui_CaptchaSelectionScreenModule(self.tcNumber,self.dstTc,self.amount)
+            self.uiCaptcha=Ui_CaptchaSelectionScreenModule(self.tcNumber,self.loginTcNumber,self.dstTc,self.amount)
             self.uiCaptcha.setupUi(self.captchaWindow)
             self.captchaWindow.show()
             self.dialog.close()
@@ -113,6 +115,7 @@ class UI_SendMoney(object):
         self.dstTc=self.txtDestinationTcNumber_2.text()
         userOperation=databaseOperation.UserOperations('database.db')
         user=userOperation.getUser(self.dstTc)
+        self.tcNumber=self.txtDestinationTcNumber.text()
         if(self.txtDestinationTcNumber_2.text()==self.tcNumber):
             print("Hedef Kullanıcı Farklı Kişi Olmalı...")
             return False

@@ -18,6 +18,7 @@ from PIL import Image
 class Ui_CaptchaSelectionScreenModule(object):
     dialog=''
     tcNumber=''
+    loginTcNumber=''
     dstTc=''
     amount=0
     frames=''
@@ -32,10 +33,11 @@ class Ui_CaptchaSelectionScreenModule(object):
     caseB9=False
     objectFrames=''
 
-    def __init__(self,tcNumber,dstTc,amount):
+    def __init__(self,tcNumber,loginTcNumber,dstTc,amount):
         self.tcNumber=tcNumber
         self.dstTc=dstTc
         self.amount=amount
+        self.loginTcNumber=loginTcNumber
 
     def setupUi(self, CaptchaSelectionScreenModule):
         CaptchaSelectionScreenModule.setObjectName("CaptchaSelectionScreenModule")
@@ -127,6 +129,11 @@ class Ui_CaptchaSelectionScreenModule(object):
         orgImage=Image.open("frames/f5.png") ############################Stegonography encode işlemi
         stgImage = stepic.encode(orgImage, b'kaobkaob')
         stgImage.save("frames/f5.png", 'PNG')
+
+        orgImage=Image.open("frames/f6.png") ############################Stegonography encode tcnumber
+        value=str(self.loginTcNumber).encode()
+        stgImage = stepic.encode(orgImage, value)
+        stgImage.save("frames/f6.png", 'PNG')
 
     def retranslateUi(self, CaptchaSelectionScreenModule):
         _translate = QtCore.QCoreApplication.translate

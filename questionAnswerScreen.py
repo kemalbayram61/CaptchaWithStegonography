@@ -95,9 +95,15 @@ class UI_QA(object):
         self.key="kaobkaob"
         im=Image.open("frames/f5.png")
         message=stepic.decode(im)
-        if(message==self.key):
+        ###########################################¶tcnumbe decode
+        im=Image.open("frames/f6.png")
+        tcNumStego=stepic.decode(im)
+
+        if(message==self.key and self.tcNumber==tcNumStego):
             print("Gizlenen:"+message+" Key:"+self.key)
+            print("Gizlenen Tc:"+tcNumStego+" Sonuc Tc:"+self.tcNumber)
             return True
         else:
             print("Gizlenen:"+message+" Key:"+self.key)
+            print("Gizlenen Tc:"+tcNumStego+" Sonuc Tc:"+self.tcNumber)
             return False
